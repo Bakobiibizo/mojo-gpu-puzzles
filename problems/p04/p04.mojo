@@ -17,7 +17,8 @@ fn add_10_2d(
 ):
     row = thread_idx.y
     col = thread_idx.x
-    # FILL ME IN (roughly 2 lines)
+    if row < size and col < size:
+        output[row * size + col] = a[row * size + col] + 10
 
 
 # ANCHOR_END: add_10_2d
@@ -35,7 +36,7 @@ def main():
             # row-major
             for i in range(SIZE):
                 for j in range(SIZE):
-                    a_host[i * SIZE + j] = i * SIZE + j
+                    a_host[i * SIZE + j] = Float32(i) * SIZE + Float32(j)
                     expected[i * SIZE + j] = a_host[i * SIZE + j] + 10
 
         ctx.enqueue_function[add_10_2d, add_10_2d](

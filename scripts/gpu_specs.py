@@ -67,12 +67,17 @@ class GPUSpecs:
 def detect_platform() -> str:
     """Detect the current platform and available GPU backends
 
-    Returns one of: 'nvidia', 'amd', 'apple_silicon', 'unknown'
+    Returns one of: 'nvidia', 'amd', 'apple_silicon', 'unknown', or a user override
 
     Supports mocking via environment variables for testing:
     - MOCK_GPU_PLATFORM: Set to nvidia/amd/apple_silicon/unknown to override detection
+    - GPU_PLATFORM_OVERRIDE: Set to any value to force-return that platform (advanced/unsupported)
     """
     # Check for mock override (for testing)
+    override_platform = os.getenv("GPU_PLATFORM_OVERRIDE")
+    if override_platform:
+        return override_platform.strip().lower()
+
     mock_platform = os.getenv("MOCK_GPU_PLATFORM")
     if mock_platform:
         valid_platforms = ["nvidia", "amd", "apple_silicon", "unknown"]
@@ -599,6 +604,7 @@ Examples:
 Testing:
   MOCK_GPU_PLATFORM=nvidia MOCK_COMPUTE_CAP=8.6 python3 scripts/gpu_specs.py --platform
   MOCK_GPU_PLATFORM=apple python3 scripts/gpu_specs.py --check-platform apple
+  GPU_PLATFORM_OVERRIDE=my_custom python3 scripts/gpu_specs.py --platform
         """
     )
 

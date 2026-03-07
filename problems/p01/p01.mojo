@@ -15,7 +15,8 @@ fn add_10(
     a: UnsafePointer[Scalar[dtype], MutAnyOrigin],
 ):
     i = thread_idx.x
-    # FILL ME IN (roughly 1 line)
+    a[i] = Float32(i)
+    output[i] = Float32(a[i] + 10)
 
 
 # ANCHOR_END: add_10
@@ -29,7 +30,7 @@ def main():
         a.enqueue_fill(0)
         with a.map_to_host() as a_host:
             for i in range(SIZE):
-                a_host[i] = i
+                a_host[i] = Float32(i)
 
         ctx.enqueue_function[add_10, add_10](
             out,
@@ -40,10 +41,10 @@ def main():
 
         expected = ctx.enqueue_create_host_buffer[dtype](SIZE)
         expected.enqueue_fill(0)
-        ctx.synchronize()
+        #ctx.synchronize()
 
         for i in range(SIZE):
-            expected[i] = i + 10
+            expected[i] = Float32(i + 10)
 
         with out.map_to_host() as out_host:
             print("out:", out_host)
