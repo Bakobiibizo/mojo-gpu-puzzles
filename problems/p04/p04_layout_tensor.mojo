@@ -6,7 +6,7 @@ from testing import assert_equal
 # ANCHOR: add_10_2d_layout_tensor
 comptime SIZE = 2
 comptime BLOCKS_PER_GRID = 1
-comptime THREADS_PER_BLOCK = (3, 3)
+comptime THREADS_PER_BLOCK = (2, 2)
 comptime dtype = DType.float32
 comptime layout = Layout.row_major(SIZE, SIZE)
 
@@ -18,8 +18,7 @@ fn add_10_2d(
 ):
     row = thread_idx.y
     col = thread_idx.x
-    # FILL ME IN (roughly 2 lines)
-
+    output[row, col] = a[row, col] + 10
 
 # ANCHOR_END: add_10_2d_layout_tensor
 
@@ -38,7 +37,7 @@ def main():
         a.enqueue_fill(0)
         with a.map_to_host() as a_host:
             for i in range(SIZE * SIZE):
-                a_host[i] = i
+                a_host[i] = Float32(i)     
                 expected[i] = a_host[i] + 10
 
         a_tensor = LayoutTensor[dtype, layout, MutAnyOrigin](a)

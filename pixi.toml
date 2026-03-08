@@ -2,11 +2,7 @@
 authors = ["Modular <hello@modular.com>"]
 channels = ["https://conda.modular.com/max-nightly", "conda-forge"]
 name = "mojo-gpu-puzzles"
-<<<<<<< Updated upstream
 platforms = ["linux-64", "linux-aarch64", "osx-arm64"]
-=======
-platforms = ["linux-64", "osx-arm64", "linux-aarch64"]
->>>>>>> Stashed changes
 version = "1.0.0"
 
 [feature.nvidia]
@@ -42,17 +38,10 @@ pytorch-triton-rocm = { version = ">=3.5.1, <4", index = "https://download.pytor
 system-requirements = { macos = "15.0" }
 
 [dependencies]
-<<<<<<< Updated upstream
 python = "==3.12"
 mojo = "<1.0.0" # includes `mojo-compiler`, lsp, debugger, formatter etc.
 max = "==26.2.0.dev2026030205"
 bash = ">=5.2.21,<6"
-=======
-python = ">=3.12.12,<3.13"
-mojo = ">=0.26.2.0.dev2026030205,<0.27" # includes `mojo-compiler`, lsp, debugger, formatter etc.
-max = ">=26.2.0.dev2026030205,<27"
-bash = ">=5.2.37,<6"
->>>>>>> Stashed changes
 manim = ">=0.18.1,<0.19"
 mdbook = ">=0.5.2,<0.6"
 pre-commit = ">=4.5.1,<5"

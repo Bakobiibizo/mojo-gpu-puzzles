@@ -27,8 +27,8 @@ fn broadcast_add[
     col = thread_idx.x
     if row < size and col < size:
         output[row, col] = a[0, col] + b[row, 0]
+    # ANCHOR_END: broadcast_add_layout_tensor
 
-# ANCHOR_END: broadcast_add_layout_tensor
 def main():
     with DeviceContext() as ctx:
         out_buf = ctx.enqueue_create_buffer[dtype](SIZE * SIZE)
@@ -48,8 +48,8 @@ def main():
         b.enqueue_fill(0)
         with a.map_to_host() as a_host, b.map_to_host() as b_host:
             for i in range(SIZE):
-                a_host[i] = i + 1
-                b_host[i] = i * 10
+                a_host[i] = Float32(i) + 1
+                b_host[i] = Float32(i) * 10
 
             for i in range(SIZE):
                 for j in range(SIZE):
